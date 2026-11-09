@@ -1,7 +1,7 @@
 # CSF302 — Assignment 2: Closest Camera Traps
 
 **Student:** Yeshey Lhaden (02240371)  
-**Experiment date:** 2 November 2026
+**Experiment date:** 28th October 2026
 
 ## Table of Contents
 
@@ -47,15 +47,15 @@ The `benchmark.py` employs seed 302 and uniformly distributed points in [0, 1)²
 
 | n | Brute force (s) | Divide and conquer (s) |
 |---:|---:|---:|
-| 1,000 | 0.164118 | 0.004930 |
-| 2,000 | 0.701349 | 0.010345 |
-| 4,000 | 2.529376 | 0.022432 |
-| 8,000 | 10.208314 | 0.046608 |
-| 16,000 | 41.862539 | 0.103003 |
-| 32,000 | 166.107199 | 0.209437 |
-| 64,000 | Skipped | 0.455163 |
+| 1,000 | 0.134706 | 0.003569 |
+| 2,000 | 0.406039 | 0.006391 |
+| 4,000 | 1.513196 | 0.013437 |
+| 8,000 | 5.948654 | 0.028477 |
+| 16,000 | 25.776661 | 0.057404 |
+| 32,000 | 101.730094 | 0.135097 |
+| 64,000 | Skipped | 0.316058 |
 
-Environment: Python 3.14.4, Darwin 25.5.0, arm64. Brute-force approach took **166.107 seconds at 32,000** and led to the activation of the stop condition; 64,000 was not calculated. The lowest n, at which the divide-and-conquer approach worked faster than the brute force one, was **1,000** (0.004930 s compared to 0.164118 s). The exact number is unknown under 1,000.
+Environment: Python 3.14.4, macOS-26.5-arm64-arm-64bit-Mach-O (as recorded in the benchmark terminal output). Brute force took **101.730 seconds at 32,000**, triggering the stop condition; brute force at 64,000 was skipped. The smallest tested n where divide and conquer was faster was **1,000** (0.003569 s compared to 0.134706 s). The crossover below 1,000 was not measured.
 
 ![Measured median runtimes on logarithmic axes](performance_graph.png)
 
@@ -63,7 +63,7 @@ Environment: Python 3.14.4, Darwin 25.5.0, arm64. Brute-force approach took **16
 
 ## Critical reflection (three questions; under 400 words)
 
-**1. Did growth match the recurrence?** The obtained values are in line with the predicted rates of growth for the specified ranges. Brute force rose from 0.164118 s to 166.107199 s when the number of points was changed from 1,000 to 32,000 – that is an increase by 1,012 times with 32 times more points; the predicted value using quadratic growth is 1,024 times. Divide and conquer rose from 0.004930 s to 0.455163 s when the number of points changed from 1,000 to 64,000 points – an increase by 92.3 times.
+**1. Did growth match the recurrence?** Brute force rose from 0.134706 s at 1,000 points to 101.730094 s at 32,000 points, an increase of 755.2 times for 32 times more points. Quadratic growth predicts 1,024 times. Divide and conquer rose from 0.003569 s at 1,000 points to 0.316058 s at 64,000 points, an increase of 88.6 times; n log₂ n growth predicts about 102.8 times. These measurements broadly support the predicted growth rates, with timing variation and limited trials affecting the ratios.
 
 **3. Which edge case required most care, and how did testing help?** Here, the use of equidistant pairs together with original index based tie breaking required additional consideration. Actually, distance alone would yield another pair of indices. Equidistant x values must be divided according to x ranking and not just their coordinate values. Such considerations were considered in tuple comparisons, strip bounding, and duplicate prechecks. Duplicate group, grid tie, vertical line, and random integers test cases were tested using brute force.
 
@@ -80,7 +80,7 @@ python3 -m venv .venv
 .venv/bin/python benchmark.py
 ```
 
-The local virtual environment `.venv` contains the package matplotlib installed. It is necessary only for plotting the graph, as the algorithms work with standard libraries. The benchmarking will overwrite the CSV file and the plot; update this report if you receive other results.
+The commands above create a local virtual environment and install matplotlib for plotting the graph. The algorithms and tests use only the Python standard library. The benchmarking will overwrite the CSV file and the plot; update this report if you receive other results.
 
 **AI-use acknowledgement:** OpenAI’s ChatGPT/Codex AI was used in helping to implement, test, benchmark, and explain the project.
 
@@ -90,7 +90,7 @@ The local virtual environment `.venv` contains the package matplotlib installed.
 
 ## Execution evidence
 
-These images render authentic output as readable transcripts; they are not desktop screenshots. The test output was captured on 9 November 2026. The benchmark summary reads the existing `timing_results.csv` from the 7 November experiment; no benchmark timings were regenerated or estimated.
+These images render authentic output as readable transcripts; they are not desktop screenshots. The test output was captured on 9 November 2026. The benchmark summary reads the existing `timing_results.csv` from the completed 9 November 2026 run; the evidence images use those saved measurements without rerunning or estimating timings.
 
 ### Test results
 
@@ -108,4 +108,4 @@ Source text and a reproducible capture script are included in `screenshots/`.
 
 ## Conclusion
 
-Both closest-pair algorithms were developed and verified through 500 random seed trials, edge cases tests, and 502 exhaustive grid subset trials. This data provides evidence of the expected Θ(n²) time complexity for brute force algorithm and Θ(n log n) time complexity for divide and conquer algorithm. Brute force takes 166.107 seconds for 32,000 points, whereas divide and conquer takes only 0.209 seconds. Divide and conquer is faster at all sizes tested and took 0.455 seconds to finish 64,000 points. This result proves that divide and conquer is more efficient for camera trap data.
+Both closest-pair algorithms were developed and verified through 500 random seed trials, edge cases tests, and 502 exhaustive grid subset trials. This data provides evidence of the expected Θ(n²) time complexity for brute force algorithm and Θ(n log n) time complexity for divide and conquer algorithm. Brute force takes 101.730 seconds for 32,000 points, whereas divide and conquer takes 0.135 seconds. Divide and conquer is faster at all sizes tested with both algorithms and took 0.316 seconds to finish 64,000 points. These measurements demonstrate its performance advantage on the tested inputs.

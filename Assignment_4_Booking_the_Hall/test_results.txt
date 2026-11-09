@@ -1,0 +1,10 @@
+test_200_equal_fee_cases (test_booking.BookingTests) ... ok
+test_500_random_cases (test_booking.BookingTests) ... ok
+test_brute_force_limit (test_booking.BookingTests) ... ok
+test_counterexamples_and_example (test_booking.BookingTests) ... ok
+test_edge_cases (test_booking.BookingTests) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.484s
+
+OK

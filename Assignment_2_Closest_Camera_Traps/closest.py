@@ -40,7 +40,7 @@ def closest_pair(points):
     """
     by_x = sorted(_prepare(points), key=lambda p: (p[0], p[1], p[2]))
 
-    # Handle zero distance first: a dense duplicate strip defeats packing bounds.
+    # Consider a zero distance first: a dense replica strip violates packing limits.
     duplicate = None
     for a, b in zip(by_x, by_x[1:]):
         if a[:2] == b[:2]:
@@ -68,8 +68,8 @@ def closest_pair(points):
         delta = best[0]
         strip = [p for p in ordered_y if abs(p[0] - dividing_x) <= delta]
         for a, (x1, y1, i) in enumerate(strip):
-            # Packing gives a constant number of neighbors. Use 15 rather
-            # than the usual 7 to conservatively include boundary-distance ties.
+            # Packings provide a fixed number of neighbors. Instead of 15, use
+            # more than the standard 7 to safely incorporate distance ties.
             for b in range(a + 1, min(a + 16, len(strip))):
                 x2, y2, j = strip[b]
                 if y2 - y1 > best[0]:

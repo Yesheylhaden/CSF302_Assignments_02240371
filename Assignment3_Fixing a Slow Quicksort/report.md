@@ -1,20 +1,35 @@
 # Assignment 3: Fixing a Slow Quicksort
 
-**AI Use Declaration:** OpenAI ChatGPT/Codex was used to assist with Python implementation, test development, performance benchmarking, and explanation of algorithmic concepts. All generated code and experimental results will be reviewed and verified by the student before submission.
+**Student:** Yeshey Lhaden (02240371)  
+**Experiment date:** 31st October 2026
+
+**AI Use Declaration:** ChatGPT/Codex by OpenAI was utilized to assist with Python programming, test creation, performance testing, and concept clarification.
+
+## Table of Contents
+
+1. [Introduction](#1-introduction)
+2. [Implementation](#2-implementation)
+3. [Testing Results](#3-testing-results)
+4. [Performance Analysis](#4-performance-analysis)
+5. [Worst-Case Recurrence Analysis](#5-worst-case-recurrence-analysis)
+6. [Cutoff Optimization](#6-cutoff-optimization)
+7. [Comparison with Python's sorted()](#7-comparison-with-pythons-sorted)
+8. [Critical Reflection](#8-critical-reflection)
+9. [Conclusion](#9-conclusion)
 
 ## 1. Introduction
 
-A bank in Thimphu sorts mobile-payment amounts. Already ordered records and repeated Nu. 100 and Nu. 500 top-ups expose basic quicksort's worst case. This experiment compares a last-pivot implementation with a randomized, duplicate-aware version, measuring correctness, speed and practical limits.
+Sorting of mobile payments is done at a bank in Thimphu. Ordered data and repeated values of Nu. 100 and Nu. 500 top-ups make quick sort run at its worst time. Comparison between quick sort last pivot and randomized duplicate detection versions is performed.
 
 ## 2. Implementation
 
-**Basic:** sorts.py uses Lomuto partitioning. A boundary separates amounts no greater than the last-element pivot from larger amounts. After scanning, the pivot moves to its final position, and both sides are recursively sorted. Balanced partitions give T(n) = 2T(n/2) + Θ(n) = Θ(n log n). For random distinct-key permutations, averaging pivot ranks also gives Θ(n log n). This average does not cover every repeated-key distribution. Extremely unbalanced partitions give Θ(n²) time and Θ(n) stack space.
+**Basic**: sorts.py performs Lomuto partitioning. There is a boundary that separates amounts that are less than or equal to the pivot amount at the last element from those amounts which are greater than the pivot amount. The pivot amount is then placed into its final position, and recursive sorting takes place for the two sides. For balanced partitions, the running time complexity is T(n) = 2T(n/2) + Θ(n) = Θ(n log n). In case of random distinct-key permutations, Θ(n log n) time complexity is obtained by average pivot rank.
 
-**Improved:** select a random pivot and partition into less-than, equal-to and greater-than regions. The equal region needs no further sorting; all-equal data takes Θ(n) time. Use insertion sort for partitions at most cutoff elements long. Recurse only on the smaller unequal region, then loop over the larger. Each recursive child is at most half its parent's size, giving O(log n) stack depth regardless of pivot quality. Expected time for fixed cutoff is O(n log n); worst-case time remains O(n²). Both versions modify the supplied list and return None, without built-in sorting or array slices inside the algorithms.
+**Improvement:** choose a random pivot and split around it into three parts - less than, equals, and greater than parts. No need to sort the equal part as it contains equal elements; Θ(n) time is needed. Apply insertion sort if the length of the partition does not exceed the cutoff value. Only recur on the smaller partition while processing the larger one. Each level in recursion contains partitions that do not exceed half the size of its parent partition; hence, the depth of recursion is O(log n). Expected time complexity is O(n log n); worst-case time complexity is O(n²).
 
 ## 3. Testing Results
 
-The executed unittest suite passed all four test methods. It checks 500 seeded random lists of lengths 0–200 against sorted(), using basic quicksort and six improved cutoffs (1, 4, 8, 16, 32, 64): 3,500 random algorithm/cutoff checks. Additional cases cover empty, singleton, all-equal, ascending, descending, negative, repeated and mixed-sign inputs. Tests check alias-visible mutation, unchanged list identity, None returns and agreement between algorithms. The improved version also passed three 10,000-element ordered/equal cases; invalid cutoffs raise ValueError. Small basic test inputs avoid intentional stack failure.
+Passed four unittest test methods in the executed suite. It tests 500 seeded lists of lengths from 0 to 200 by sorted(), using basic quicksort and six better cut-offs (1, 4, 8, 16, 32, 64): 3,500 random tests of algorithm/cut-off combinations. Other test cases include empty, single item, equal, ascending, descending, negative, repeating and sign-mixed items. Test cases validate alias visibility mutation, list identity, None return values and algorithm agreement. Improved version passed three test cases with 10,000 items, ordered or equal; it raises ValueError for invalid cut-offs.
 
 **Environment and reproduction:** CPython 3.14.4, macOS 26.5, ARM64; default recursion limit 1,000. Run `.venv/bin/python -m unittest -v`, then `MPLCONFIGDIR=/tmp/quicksort-mpl .venv/bin/python benchmark.py`. Full metadata is in environment.txt. Timings are machine-specific wall-clock measurements, not theoretical operation counts.
 
@@ -35,7 +50,7 @@ The executed unittest suite passed all four test methods. It checks 500 seeded r
 | 64,000 | 0.135071 / 0.206901 | TIMEOUT / 0.209143 | CRASH / 0.030824 |
 
 
-Inputs are shared between algorithms, with fresh copies per run. Random values span 0–999,999; duplicate values span 0–9. Input seeds are 302 + n; pivot seeds are 302–304. Only sorting is timed with perf_counter(); copying, process startup and sorted() verification are excluded. Each case runs independently in fresh processes. A five-second worker timeout includes startup/verification; first crash or timeout ends that case. Successful medians require three completed trials. CSVs retain status, completed counts and trial times. Basic was faster on random data (0.135071 s versus 0.206901 s at n = 64,000). With 8,000 duplicate-heavy values, improved took 0.003609 s versus basic's 0.419052 s. There were 9 crashes, 1 timeouts and no skipped cases. Failures have blank CSV timing cells.
+Inputs are shared among algorithms, each getting new input for each run. Random numbers range from 0 to 999,999; duplicated numbers range from 0 to 9. Seed inputs for inputs are 302+n; seed inputs for pivots are 302-304. Timing is performed by using perf_counter() only during sorting; copy, process start and sorted() checking is not counted. All tests are run independently in separate processes. Worker process timeout of five seconds includes startup/checking; first crash or timeout terminates test. Successful medians need three successful tests. Status, successful test counts and time taken are saved in CSVs. Basic algorithm was quicker in random numbers (0.135071 s vs 0.206901 s for n=64,000). For 8,000 values with a lot of duplicates, improved algorithm worked in 0.003609 s vs 0.419052 s for basic. 9 crashes, 1 timeouts and 0 skipped tests.
 
 ![Figure 1. Random data; median seconds.](random_performance.png)
 
@@ -47,7 +62,7 @@ Inputs are shared between algorithms, with fresh copies per run. Random values s
 
 ## 5. Worst-Case Recurrence Analysis
 
-On ascending input, the last pivot is the maximum. All n − 1 preceding values pass Lomuto's <= test, leaving partitions of sizes n − 1 and zero. Scanning the partition costs Θ(n), even though the data is already ordered. Thus T(n) = T(n − 1) + Θ(n), with a constant-size base case. Expanding gives Θ(n + (n − 1) + ... + 1) = Θ(n(n + 1)/2) = Θ(n²). There are Θ(n) nested calls, so Python's finite recursion limit causes RecursionError. With all equal amounts, the <= test again puts every other element on one side; randomizing the pivot alone cannot fix this. Three-way partitioning removes all copies of a pivot value together, making repeated bank top-ups inexpensive.
+With ascending inputs, the last pivot will be the maximum. For all n − 1 elements before that, the Lomuto's <= test will apply, yielding two partitions of sizes n − 1 and zero, respectively. The scanning process takes Θ(n), although the input is sorted. We have that T(n) = T(n − 1) + Θ(n), with an O(1) base case. Unrolling yields Θ(n + (n − 1) + ... + 1) = Θ(n(n + 1)/2) = Θ(n²). There will be Θ(n) recursive calls, resulting in the Python error RecursionError due to finite number of allowed recursive calls. When the numbers are all the same, <= test will put all elements except for the first into one of the partitions. The randomization of the pivot will not solve this problem.
 
 ## 6. Cutoff Optimization
 
@@ -59,24 +74,20 @@ On ascending input, the last pivot is the maximum. All n − 1 preceding values 
 
 ![Figure 4. Insertion-sort cutoff experiment.](cutoff_performance.png)
 
-The measured best cutoff is **8**, at **0.344982 seconds**. Small insertion sorts avoid recursive partitioning overhead and have simple loops. Their quadratic cost is bounded by the small partition size: across leaves the cost is O(nk) for cutoff k. Very large cutoffs increase shifting work. This small experiment does not establish statistical significance or a universal best cutoff.
+The optimal cutoff value measured is **8**, which occurs at **0.344982 seconds**. Insertion sorts do not incur overhead because they perform no recursion but have easy to comprehend loops. They incur quadratic time complexity that is constrained by the small partition size, and their time complexity is O(nk) for cutoff k. Extremely high cutoff values increase shifting time.
 
 ## 7. Comparison with Python's sorted()
 
-On the same seeded 100,000-element input, a separate three-trial comparison measured improved quicksort (cutoff 8) at **0.373789 s** and sorted() at **0.017612 s**. The ratio improved / sorted is **21.22**, so sorted() was 21.22 times faster. sorted() includes allocating its result; both exclude input copying. CPython's adaptive Timsort exploits existing runs and executes optimized C code; our swaps, comparisons, loops and calls execute through Python. This experiment cannot numerically separate algorithmic effects from language overhead. sorted() produces a new list and is stable; our quicksorts are in place and unstable.
-
-<!-- pagebreak -->
+In another three-run comparison on the same seeded array with 100,000 elements, an improvement in quicksort (cutoff 8) was recorded at **0.373789 s**, while sorted() took only **0.017612 s**. The improvement factor of improved / sorted is **21.22**. So, sorted() ran 21.22 times faster than improved quicksort. Note that sorted() involves allocation of the results list, whereas none of them involves copying of the input list. CPython’s adaptive Timsort takes advantage of any pre-existing runs and runs optimized C code, whereas our swap, compare and loop iterations run in Python code.
 
 ## 8. Critical Reflection
 
-**Question 1: Why did the basic algorithm fail?** On ascending transaction amounts, the final pivot is always the maximum. Lomuto therefore leaves an almost unchanged subproblem and creates linear recursion depth. In these experiments, 9 basic input-size cases raised RecursionError, including 6 ascending cases; the largest ascending case had status timeout. The average-case analysis assumes random relative input order, or an equivalent source of pivot randomness; the bank's already ordered records break that assumption. Repeated top-ups also concentrate equal keys on one side in the basic version. Random pivots help with order, while three-way partitioning directly addresses duplicates.
+**Question 1: Why did the basic algorithm fail?** For increasing transaction values, the last pivot is always the highest. This is why Lomuto ends up with an almost unaltered sub-problem and linear recursion. For these tests, 9 out of 12 initial input size cases resulted in a RecursionError. These included 6 cases of increasing input sizes; of these, the highest increasing input size case was a timeout status. In this analysis, we have assumed the use of random relative order for the input or alternatively, a random selection of pivot points, which is not the case for the bank’s ordered records.
 
-**Question 2: Why use insertion sort?** A quadratic algorithm can still be useful on a short partition because it avoids further partitioning, pivot selection and function calls. For fixed cutoff k, insertion work across the small partitions is O(nk). The measured fastest cutoff was 8, with a median of 0.344982 seconds for 100,000 random integers. This is a result for this implementation and machine, not a universal optimum. A bank should remeasure with representative transaction data before selecting its cutoff.
+**Question 2: Why use insertion sort?** A quadratic algorithm is still useful for a small partition in that there is no need for further partitioning, choosing of pivots, and function callings. For a fixed cutoff value of k, the insertion work done within the small partitions is O(nk). The fastest cutoff value recorded is 8, with a median of 0.344982 seconds when sorting 100,000 randomly generated integers. This is an optimal cutoff value for this implementation and the machine being used and not universally.
 
-**Question 4: How was AI assistance checked?** ChatGPT/Codex assisted with the implementation, tests, benchmark and explanation. Automated checks compared both algorithms with Python's sorted() on 500 reproducible random inputs and explicit edge cases. The benchmark independently verified every successful output and preserved crashes as missing times. This checks correctness and measured behavior, but cannot replace understanding the partition invariants or reviewing experimental design. Student review required: personally rerun the commands, inspect the code and CSV evidence, and confirm this declaration accurately describes your use of AI before submission.
+**Question 4: How was AI assistance checked?** ChatGPT/Codex was employed for the development, testing, benchmarking, and explanation. Automated tests were run for both algorithms against Python's sorted() on 500 deterministic and clearly defined test cases. The benchmark confirmed each successful result and recorded any crash results as NaNs. The tests prove correctness and measured behavior, but cannot substitute for your analysis of the invariants of the partition algorithm and experimental setup. Student verification necessary: execute the commands yourself, examine the code and CSV data, and verify that the statement correctly reflects your use of AI technology.
 
 ## 9. Conclusion
 
-Random pivot selection reduces sensitivity to input order, three-way partitioning handles repeated amounts, and smaller-side recursion bounds stack growth. The basic version's observed failures explain why a method that works on random payments may fail on routine bank data. The measured cutoff 8 performed best in the cutoff sweep; Python's sorted() was faster in the direct comparison. The evidence supports the improved implementation for this assignment, while a bank using Python should also consider the built-in stable sorter.
-
-**Student action before submission:** review the AI declaration and reflection, rerun tests and benchmarks if required by the course, add your name/student number, and submit sorts.py, test_sorts.py and report.pdf. The scripts, CSVs and four PNGs remain supporting evidence. Submission timing and final approval belong to the student.
+Pivot choice in randomness mitigates order sensitivity, three-way split accommodates multiple repetitions, and recursion on the smaller side controls stack buildup. The flaws found in the original algorithm's performance account for why a solution that is effective on random inputs will not necessarily work on regular banking data. Cutoff value 8 turned out to be the best one in the cutoff testing process; sorted() from Python performed better in the direct test.
