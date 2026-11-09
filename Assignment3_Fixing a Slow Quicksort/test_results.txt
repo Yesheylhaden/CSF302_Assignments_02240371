@@ -1,0 +1,9 @@
+test_500_random_cases (test_sorts.SortTests.test_500_random_cases) ... ok
+test_edge_cases (test_sorts.SortTests.test_edge_cases) ... ok
+test_invalid_cutoffs (test_sorts.SortTests.test_invalid_cutoffs) ... ok
+test_large_improved_inputs (test_sorts.SortTests.test_large_improved_inputs) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.539s
+
+OK

@@ -1,0 +1,15 @@
+{'n': 1000, 'brute_median_s': 0.156104082998354, 'divide_median_s': 0.004805584030691534, 'brute_trials': 3, 'divide_trials': 3, 'brute_samples_s': '[0.1562354170018807, 0.156104082998354, 0.1558105000294745]', 'divide_samples_s': '[0.004805584030691534, 0.004739083000458777, 0.0048277919995598495]', 'brute_status': 'completed'}
+{'n': 2000, 'brute_median_s': 0.624183957988862, 'divide_median_s': 0.01026620896300301, 'brute_trials': 3, 'divide_trials': 3, 'brute_samples_s': '[0.624183957988862, 0.6253069170052186, 0.6230537919909693]', 'divide_samples_s': '[0.01026620896300301, 0.010259250004310161, 0.010276541986968368]', 'brute_status': 'completed'}
+{'n': 4000, 'brute_median_s': 2.4947574580437504, 'divide_median_s': 0.021890042000450194, 'brute_trials': 3, 'divide_trials': 3, 'brute_samples_s': '[2.494141041999683, 2.4997327090241015, 2.4947574580437504]', 'divide_samples_s': '[0.021909583010710776, 0.021812708000652492, 0.021890042000450194]', 'brute_status': 'completed'}
+{'n': 8000, 'brute_median_s': 9.975165291980375, 'divide_median_s': 0.04657133301952854, 'brute_trials': 1, 'divide_trials': 3, 'brute_samples_s': '[9.975165291980375]', 'divide_samples_s': '[0.04670645802980289, 0.04657133301952854, 0.04582658299477771]', 'brute_status': 'completed'}
+{'n': 16000, 'brute_median_s': 39.91192887502257, 'divide_median_s': 0.09738749999087304, 'brute_trials': 1, 'divide_trials': 3, 'brute_samples_s': '[39.91192887502257]', 'divide_samples_s': '[0.09798441699240357, 0.09688929200638086, 0.09738749999087304]', 'brute_status': 'completed'}
+{'n': 32000, 'brute_median_s': 162.48620300000766, 'divide_median_s': 0.20850562496343628, 'brute_trials': 1, 'divide_trials': 3, 'brute_samples_s': '[162.48620300000766]', 'divide_samples_s': '[0.2102807920309715, 0.20850562496343628, 0.20745208399603143]', 'brute_status': 'exceeded_60s'}
+{'n': 64000, 'brute_median_s': '', 'divide_median_s': 0.4578068339615129, 'brute_trials': 0, 'divide_trials': 3, 'brute_samples_s': '[]', 'divide_samples_s': '[0.5198332500294782, 0.4578068339615129, 0.44704749999800697]', 'brute_status': 'skipped_after_60s'}
+
+Fontconfig error: No writable cache directories
+	/opt/homebrew/var/cache/fontconfig
+	/Users/mac/.cache/fontconfig
+	/Users/mac/.fontconfig
+Matplotlib is building the font cache; this may take a moment.
+Smallest measured crossover: 1000
+Python: 3.14.4 Platform: macOS-26.5-arm64-arm-64bit-Mach-O

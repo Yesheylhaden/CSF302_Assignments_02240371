@@ -1,0 +1,14 @@
+$ python3 -m unittest -v
+test_500_random_inputs (test_closest.ClosestPairTests.test_500_random_inputs) ... ok
+test_crossing_dividing_line (test_closest.ClosestPairTests.test_crossing_dividing_line) ... ok
+test_duplicates (test_closest.ClosestPairTests.test_duplicates) ... ok
+test_invalid_size (test_closest.ClosestPairTests.test_invalid_size) ... ok
+test_nonfinite_coordinates (test_closest.ClosestPairTests.test_nonfinite_coordinates) ... ok
+test_ties (test_closest.ClosestPairTests.test_ties) ... ok
+test_two_points (test_closest.ClosestPairTests.test_two_points) ... ok
+test_vertical (test_closest.ClosestPairTests.test_vertical) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.082s
+
+OK

@@ -1,0 +1,52 @@
+random 1000 basic ok 0.0011964999721385539
+random 1000 improved ok 0.0018713329918682575
+random 2000 basic ok 0.003061415976844728
+random 2000 improved ok 0.004206916957627982
+random 4000 basic ok 0.006525291013531387
+random 4000 improved ok 0.009232832991983742
+random 8000 basic ok 0.013959500007331371
+random 8000 improved ok 0.02044587500859052
+random 16000 basic ok 0.028461583016905934
+random 16000 improved ok 0.044703583989758044
+random 32000 basic ok 0.06406320899259299
+random 32000 improved ok 0.09681704198010266
+random 64000 basic ok 0.13507129199570045
+random 64000 improved ok 0.20690137502970174
+sorted 1000 basic crash 
+sorted 1000 improved ok 0.0019173750188201666
+sorted 2000 basic crash 
+sorted 2000 improved ok 0.004422832978889346
+sorted 4000 basic crash 
+sorted 4000 improved ok 0.009671750012785196
+sorted 8000 basic crash 
+sorted 8000 improved ok 0.02157358400290832
+sorted 16000 basic crash 
+sorted 16000 improved ok 0.0638120420044288
+sorted 32000 basic crash 
+sorted 32000 improved ok 0.10441266698762774
+sorted 64000 basic timeout 
+sorted 64000 improved ok 0.20914304198231548
+duplicates 1000 basic ok 0.007083665987011045
+duplicates 1000 improved ok 0.0005131670041009784
+duplicates 2000 basic ok 0.027460833021905273
+duplicates 2000 improved ok 0.0009233750170096755
+duplicates 4000 basic ok 0.10603999998420477
+duplicates 4000 improved ok 0.0018704580143094063
+duplicates 8000 basic ok 0.419051542005036
+duplicates 8000 improved ok 0.0036092920345254242
+duplicates 16000 basic crash 
+duplicates 16000 improved ok 0.007981874980032444
+duplicates 32000 basic crash 
+duplicates 32000 improved ok 0.014909915975295007
+duplicates 64000 basic crash 
+duplicates 64000 improved ok 0.030823666020296514
+Traceback (most recent call last):
+  File "/Users/mac/Desktop/Assignment3_Fixing a Slow Quicksort/benchmark.py", line 158, in <module>
+    main()
+    ~~~~^^
+  File "/Users/mac/Desktop/Assignment3_Fixing a Slow Quicksort/benchmark.py", line 148, in main
+    graphs(timings, cutoffs)
+    ~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/mac/Desktop/Assignment3_Fixing a Slow Quicksort/benchmark.py", line 83, in graphs
+    import matplotlib
+ModuleNotFoundError: No module named 'matplotlib'

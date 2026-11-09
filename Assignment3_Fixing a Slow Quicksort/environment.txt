@@ -1,0 +1,8 @@
+Python: 3.14.4 (main, Apr  7 2026, 13:13:20) [Clang 17.0.0 (clang-1700.6.4.2)]
+Platform: macOS-26.5-arm64-arm-64bit-Mach-O
+Recursion limit: 1000
+Trials: 3
+Seed: 302; input seeds: 302+n; pivot seeds: 302,303,304
+Timeout: 5s per worker including startup and verification
+Matplotlib: 3.11.2
+Note: First run saved all CSVs before graph import failed during dependency installation. Graphs were then generated from these CSVs.
